@@ -15,7 +15,7 @@ To do so, log into your TestRail account and go to Administration > Site Setting
 Add the required options to your WDIO config file
 
 ```javascript
-const TestRailReporter = require('wdio-testrail-reporter')
+const TestRailReporter = require("@wdio/testrail-reporter");
 
     reporters: 
         [[TestRailReporter, {

@@ -130,15 +130,12 @@ const getLastTestRun = async () => {
       console.log(error);
     })
     .then(async (response) => {
-      if (synced === false) {
-        if (response.data.size > 0) {
-          runId = response.data.runs[0].id
-          console.log(`Update test suite: ${runId}`)
-        } else {
-          await createTestRun()
-        }
+      if (response.data.size > 0) {
+        runId = response.data.runs[0].id
+        console.log(`Update test suite: ${runId}`)
+      } else {
+        await createTestRun()
       }
-      synced = true
     })
 
 };
@@ -234,6 +231,6 @@ module.exports = class TestRailReporter extends WDIOReporter {
       await updateTestRun()
       await updateTestRunResults()
     }
+    synced = true
   };
-
 };

@@ -117,7 +117,7 @@ const getLastTestRun = async () => {
   date = new Date(date)
   var unixTimeStamp = Math.floor(date.getTime() / 1000);
   const resp = await axios.get(
-    `https://${params.domain}/index.php?/api/v2/get_runs/${params.projectId}&is_completed=0&created_after=${unixTimeStamp}`,
+    `https://${params.domain}/index.php?/api/v2/get_runs/${params.projectId}&is_completed=0&created_after=${unixTimeStamp}&suite_id=${params.suiteId}`,
 
     {
       auth: {
@@ -130,8 +130,11 @@ const getLastTestRun = async () => {
       console.log(error);
     })
     .then(async (response) => {
-      if (response.data.size > 0) {
-        runId = response.data.runs[0].id
+      var thisrun = response.data.runs.filter(function (run) {
+        return run.name.startsWith(params.runName);
+      });
+      if (thisrun.length > 0) {
+        runId = thisrun[0].id
         console.log(`Update test suite: ${runId}`)
       } else {
         await createTestRun()

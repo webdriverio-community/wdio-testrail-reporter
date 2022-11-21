@@ -1,40 +1,72 @@
 
-# wdio-testrail-reporter #
+# WebdriverIO Testrail Reporter
 
-This is a fork from [LuisDiegoNavas/testrail-wdio-custom-reporter](https://github.com/LuisDiegoNavas/testrail-wdio-custom-reporter)
+This reporter creates TestRail reports. The first thing you need is to enable the TestRail API so that report can communicate with TestRail and push the test results. To do so, log into your TestRail account and go to Administration > Site Settings > API and make sure you click the checkbox near Enable API.
 
-Create a run on TestRail and the update the test cases results
+## Install
 
-## Use [TestRail API](https://www.gurock.com/testrail/docs/api/reference) ##
+To use the reporter, add it to your `package.json`:
 
-The first thing you need is to enable the TestRail API so that report can communicate with TestRail and push the test results.
-To do so, log into your TestRail account and go to Administration > Site Settings > API and make sure you click the checkbox near Enable API.
-
-## Usage/Examples ##
-
-Add the required options to your WDIO config file
-
-```javascript
-const TestRailReporter = require("@wdio/testrail-reporter");
-
-    reporters: 
-        [[TestRailReporter, {
-        projectId: 1,
-        suiteId: 1,
-        domain: 'xxxxx.testrail.io',
-        username: 'userEmail',
-        apiToken: 'testrail apitoken',
-        runName: 'name for the test run'  
-    }]],
+```sh
+npm i --save-dev @wdio/testrail-reporter
 ```
 
-## Configuration ##
+## Usage
+
+Add the reporter to your WDIO config file:
 
 ```javascript
-    projectId: ID of the testrail project
-    suiteId: ID of the suite, suite 1 is default 
-    domain: your-domain.testrail.io, // no default, required field
-    username: 'userEmail', // no default, required field
-    apiToken: 'testrail apitoken', // no default, required field
-    runName: 'name for the test run'
+export const config = {
+    // ...
+    reporters:
+        [
+            ['testrail-reporter', {
+                projectId: 1,
+                suiteId: 1,
+                domain: 'xxxxx.testrail.io',
+                username: process.env.TESTRAIL_USERNAME,
+                apiToken: process.env.TESTRAIL_API_TOKEN,
+                runName: 'name for the test run'
+            }
+        ]
+    ],
+    // ...
+}
 ```
+
+
+## Options
+
+### `projectId`
+ID of the testrail project.
+
+Type: `string`
+
+### `suiteId`
+ID of the suite, suite 1 is default.
+
+Type: `string`
+
+### `domain`
+Domain of your testrail instance, e.g. `your-domain.testrail.io`.
+
+Type: `string`
+
+### `username`
+Username of your testrail instance.
+
+Type: `string`
+
+### `apiToken`
+API token of your testrail instance.
+
+Type: `string`
+
+### `runName`
+Custom name for the test run.
+
+Type: `string`
+
+---
+
+For more information on WebdriverIO see the [homepage](https://webdriver.io).

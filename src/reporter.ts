@@ -23,17 +23,6 @@ export default class TestRailReporter extends WDIOReporter {
         return this.#synced
     }
 
-    #getRunId () {
-        return this.#options.oneReport
-            ? this.#api.getLastTestRun(this.#options.suiteId, this.#options.runName)
-            : this.#api.createTestRun({
-                suite_id: this.#options.suiteId,
-                name: this.#options.runName,
-                // ToDo(Christian): should we make this optional?
-                include_all: false
-            })
-    }
-
     onTestPass (test: TestStats) {
         this.#testCases.push({
             case_id: test.title.split(' ')[0].replace('C', ''),
@@ -64,6 +53,23 @@ export default class TestRailReporter extends WDIOReporter {
 
     onRunnerEnd () {
         this.#requestPromises.push(this.#updateTestRun())
+    }
+
+    async sync () {
+        // ensure all request promises were resolved
+        await Promise.all(this.#requestPromises)
+        this.#synced = true
+    }
+
+    #getRunId () {
+        return this.#options.oneReport
+            ? this.#api.getLastTestRun(this.#options.suiteId, this.#options.runName)
+            : this.#api.createTestRun({
+                suite_id: this.#options.suiteId,
+                name: this.#options.runName,
+                // ToDo(Christian): should we make this optional?
+                include_all: false
+            })
     }
 
     async #updateSuite (suiteStats: SuiteStats) {
@@ -111,11 +117,5 @@ export default class TestRailReporter extends WDIOReporter {
         const caseIds = this.#testCases.map((test) => test.case_id)
         await this.#api.updateTestRun(runId, caseIds),
         await this.#api.updateTestRunResults(runId, this.#testCases)
-    }
-
-    async sync () {
-        // ensure all request promises were resolved
-        await Promise.all(this.#requestPromises)
-        this.#synced = true
     }
 }

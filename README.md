@@ -20,7 +20,7 @@ export const config = {
     // ...
     reporters:
         [
-            ['testrail-reporter', {
+            ['testrail', {
                 projectId: 1,
                 suiteId: 1,
                 domain: 'xxxxx.testrail.io',

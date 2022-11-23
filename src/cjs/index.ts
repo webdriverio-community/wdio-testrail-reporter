@@ -8,6 +8,11 @@ exports.default = class CJSTestrailReporter {
         })
     }
 
+    async emit (...args: any[]) {
+        const instance = await this.instance
+        return instance.emit(...args)
+    }
+
     get isSynchronised() {
         return this.#synced
     }

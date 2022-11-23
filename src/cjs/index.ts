@@ -1,12 +1,8 @@
-import type { TestStats, SuiteStats } from '@wdio/reporter'
-import type TestrailReporter from '../index'
-import type { ReporterOptions } from '../types'
-
 exports.default = class CJSTestrailReporter {
     #synced = false
-    private instance: Promise<TestrailReporter>
+    private instance: Promise<any>
 
-    constructor(options: ReporterOptions) {
+    constructor(options: any) {
         this.instance = import('../index.js').then((TestrailReporter) => {
             return new TestrailReporter.default(options)
         })
@@ -16,22 +12,22 @@ exports.default = class CJSTestrailReporter {
         return this.#synced
     }
 
-    async onTestPass (test: TestStats) {
+    async onTestPass (test: any) {
         const instance = await this.instance
         return instance.onTestPass(test)
     }
 
-    async onTestFail (test: TestStats) {
+    async onTestFail (test: any) {
         const instance = await this.instance
         return instance.onTestFail(test)
     }
 
-    async onTestSkip (test: TestStats) {
+    async onTestSkip (test: any) {
         const instance = await this.instance
         return instance.onTestSkip(test)
     }
 
-    async onSuiteEnd (suiteStats: SuiteStats) {
+    async onSuiteEnd (suiteStats: any) {
         const instance = await this.instance
         return instance.onSuiteEnd(suiteStats)
     }

@@ -26,7 +26,9 @@ export const config = {
                 domain: 'xxxxx.testrail.io',
                 username: process.env.TESTRAIL_USERNAME,
                 apiToken: process.env.TESTRAIL_API_TOKEN,
-                runName: 'name for the test run'
+                runName: 'name for the test run',
+                oneReport: true,
+                includeAll: false
             }
         ]
     ],

@@ -67,8 +67,7 @@ export default class TestRailReporter extends WDIOReporter {
             : this.#api.createTestRun({
                 suite_id: this.#options.suiteId,
                 name: this.#options.runName,
-                // ToDo(Christian): should we make this optional?
-                include_all: false
+                include_all: this.#options.includeAll
             })
     }
 

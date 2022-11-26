@@ -9,6 +9,7 @@ export default class TestRailAPI {
     #config: AxiosRequestConfig = {}
     #projectId: string
     #baseUrl: string
+    #includeAll: boolean
 
     /**
      *
@@ -18,6 +19,7 @@ export default class TestRailAPI {
     constructor (options: ReporterOptions) {
         this.#baseUrl = `https://${options.domain}/index.php?/api/v2`
         this.#projectId = options.projectId
+        this.#includeAll = options.includeAll
         this.#config.auth = {
             username: options.username,
             password: options.apiToken
@@ -98,7 +100,7 @@ export default class TestRailAPI {
                 : await this.createTestRun({
                     suite_id: suiteId,
                     name: runName,
-                    include_all: true
+                    include_all: this.#includeAll
                 })
 
             return runId

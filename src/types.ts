@@ -44,4 +44,8 @@ export interface ReporterOptions {
      * create one report per test run
      */
     oneReport: boolean
+    /**
+     * include all test cases in suite
+     */
+    includeAll: boolean
 }

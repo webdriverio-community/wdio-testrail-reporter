@@ -34,38 +34,55 @@ export const config = {
 }
 ```
 
-
 ## Options
 
 ### `projectId`
+
 ID of the testrail project.
 
 Type: `string`
 
 ### `suiteId`
+
 ID of the suite, suite 1 is default.
 
 Type: `string`
 
 ### `domain`
+
 Domain of your testrail instance, e.g. `your-domain.testrail.io`.
 
 Type: `string`
 
 ### `username`
+
 Username of your testrail instance.
 
 Type: `string`
 
 ### `apiToken`
+
 API token of your testrail instance.
 
 Type: `string`
 
 ### `runName`
+
 Custom name for the test run.
 
 Type: `string`
+
+### `oneReport`
+
+Create a single test run.
+
+Type: `boolean`
+
+### `includeAll`
+
+Include all tests in suite in test run.
+
+Type: `boolean`
 
 ---
 

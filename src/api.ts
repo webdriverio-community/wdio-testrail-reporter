@@ -40,10 +40,25 @@ export default class TestRailAPI {
     }
 
     async updateTestRun (runId: string, case_ids: unknown[]) {
+        await axios.get(
+            `${this.#baseUrl}/get_tests/${runId}`,
+            this.#config
+        ).then((res) => {
+            if (res.data.tests.length > 0) {
+                const addCaseIds = res.data.tests.map((tests: { case_id: number }) => tests.case_id)
+                addCaseIds.forEach((id: number) => {
+                    case_ids.push(id)
+                })
+            }
+        }
+        ).catch((err) => {
+            log.error(`Error getting test run: ${err.message}`)
+        })
+
         try {
             const resp = await axios.post(
                 `${this.#baseUrl}/update_run/${runId}`,
-                { case_ids },
+                { 'case_ids': case_ids },
                 this.#config
             )
             return resp

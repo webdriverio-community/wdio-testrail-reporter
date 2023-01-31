@@ -21,5 +21,7 @@ export interface ReporterOptions {
     runName: string;
     oneReport: boolean;
     includeAll: boolean;
+    buildName: string;
+    runNumber: string;
 }
 //# sourceMappingURL=types.d.ts.map

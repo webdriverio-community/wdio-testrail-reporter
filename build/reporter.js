@@ -91,7 +91,7 @@ export default class TestRailReporter extends WDIOReporter {
 }
 _TestRailReporter_api = new WeakMap(), _TestRailReporter_options = new WeakMap(), _TestRailReporter_synced = new WeakMap(), _TestRailReporter_testCases = new WeakMap(), _TestRailReporter_requestPromises = new WeakMap(), _TestRailReporter_instances = new WeakSet(), _TestRailReporter_getRunId = function _TestRailReporter_getRunId() {
     return __classPrivateFieldGet(this, _TestRailReporter_options, "f").oneReport
-        ? __classPrivateFieldGet(this, _TestRailReporter_api, "f").getLastTestRun(__classPrivateFieldGet(this, _TestRailReporter_options, "f").suiteId, __classPrivateFieldGet(this, _TestRailReporter_options, "f").runName)
+        ? __classPrivateFieldGet(this, _TestRailReporter_api, "f").getLastTestRun(__classPrivateFieldGet(this, _TestRailReporter_options, "f").suiteId, __classPrivateFieldGet(this, _TestRailReporter_options, "f").runName, __classPrivateFieldGet(this, _TestRailReporter_options, "f").buildName, __classPrivateFieldGet(this, _TestRailReporter_options, "f").runNumber)
         : __classPrivateFieldGet(this, _TestRailReporter_api, "f").createTestRun({
             suite_id: __classPrivateFieldGet(this, _TestRailReporter_options, "f").suiteId,
             name: __classPrivateFieldGet(this, _TestRailReporter_options, "f").runName,

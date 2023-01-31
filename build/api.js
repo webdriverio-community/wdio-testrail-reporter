@@ -10,9 +10,9 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _TestRailAPI_config, _TestRailAPI_projectId, _TestRailAPI_baseUrl, _TestRailAPI_includeAll;
-import axios from 'axios';
-import logger from '@wdio/logger';
-const log = logger('TestrailReporter');
+import axios from "axios";
+import logger from "@wdio/logger";
+const log = logger("TestrailReporter");
 export default class TestRailAPI {
     constructor(options) {
         _TestRailAPI_config.set(this, {});
@@ -24,7 +24,7 @@ export default class TestRailAPI {
         __classPrivateFieldSet(this, _TestRailAPI_includeAll, options.includeAll, "f");
         __classPrivateFieldGet(this, _TestRailAPI_config, "f").auth = {
             username: options.username,
-            password: options.apiToken
+            password: options.apiToken,
         };
     }
     async updateTestRunResults(runId, results) {
@@ -37,18 +37,21 @@ export default class TestRailAPI {
         }
     }
     async updateTestRun(runId, case_ids) {
-        await axios.get(`${__classPrivateFieldGet(this, _TestRailAPI_baseUrl, "f")}/get_tests/${runId}`, __classPrivateFieldGet(this, _TestRailAPI_config, "f")).then((res) => {
+        await axios
+            .get(`${__classPrivateFieldGet(this, _TestRailAPI_baseUrl, "f")}/get_tests/${runId}`, __classPrivateFieldGet(this, _TestRailAPI_config, "f"))
+            .then((res) => {
             if (res.data.tests.length > 0) {
                 const addCaseIds = res.data.tests.map((tests) => tests.case_id);
                 addCaseIds.forEach((id) => {
                     case_ids.push(id);
                 });
             }
-        }).catch((err) => {
+        })
+            .catch((err) => {
             log.error(`Error getting test run: ${err.message}`);
         });
         try {
-            const resp = await axios.post(`${__classPrivateFieldGet(this, _TestRailAPI_baseUrl, "f")}/update_run/${runId}`, { 'case_ids': case_ids }, __classPrivateFieldGet(this, _TestRailAPI_config, "f"));
+            const resp = await axios.post(`${__classPrivateFieldGet(this, _TestRailAPI_baseUrl, "f")}/update_run/${runId}`, { case_ids: case_ids }, __classPrivateFieldGet(this, _TestRailAPI_config, "f"));
             return resp;
         }
         catch (err) {
@@ -73,7 +76,7 @@ export default class TestRailAPI {
         log.info(`Create new run '${test.name}' with id: ${resp.data.id}`);
         return resp.data.id;
     }
-    async getLastTestRun(suiteId, runName) {
+    async getLastTestRun(suiteId, runName, buildName, runNumber) {
         const thirtyMinAgo = new Date();
         thirtyMinAgo.setMinutes(thirtyMinAgo.getMinutes() - 30);
         const date = new Date(thirtyMinAgo);
@@ -87,8 +90,8 @@ export default class TestRailAPI {
                 ? thisrun[0].id
                 : await this.createTestRun({
                     suite_id: suiteId,
-                    name: runName,
-                    include_all: __classPrivateFieldGet(this, _TestRailAPI_includeAll, "f")
+                    name: `${runName} ${buildName} (${runNumber})`,
+                    include_all: __classPrivateFieldGet(this, _TestRailAPI_includeAll, "f"),
                 });
             return runId;
         }

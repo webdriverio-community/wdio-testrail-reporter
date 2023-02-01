@@ -23,11 +23,12 @@ export default class TestRailReporter extends WDIOReporter {
         return this.#synced
     }
 
-    onTestPass (test: TestStats) {
+    onTestPass(test: TestStats) {
         this.#testCases.push({
             case_id: test.title.split(' ')[0].replace('C', ''),
             status_id: '1',
-            comment: 'This test case is passed'
+            comment: 'This test case is passed',
+            elapsed: test._duration / 1000 + 's'
         })
     }
 
@@ -35,7 +36,8 @@ export default class TestRailReporter extends WDIOReporter {
         this.#testCases.push({
             case_id: test.title.split(' ')[0].replace('C', ''),
             status_id: '5',
-            comment: `This test case is failed:\n ${JSON.stringify(test.errors)}`
+            comment: `This test case is failed:\n ${JSON.stringify(test.errors)}`,
+            elapsed: test._duration / 1000 + 's'
         })
     }
 

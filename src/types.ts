@@ -13,6 +13,7 @@ export interface TestCase {
     case_id: string
     status_id: string
     comment: string
+    elapsed?: string
 }
 
 export interface ReporterOptions {

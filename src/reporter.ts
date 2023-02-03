@@ -1,4 +1,4 @@
-import WDIOReporter, { TestStats, SuiteStats } from '@wdio/reporter'
+import WDIOReporter, { TestStats, SuiteStats, RunnerStats } from '@wdio/reporter'
 
 import TestRailAPI from './api.js'
 import type { ReporterOptions, TestCase, TestResults } from './types'
@@ -10,7 +10,7 @@ export default class TestRailReporter extends WDIOReporter {
     #synced = false
     #testCases: TestCase[] = []
     #requestPromises: Promise<unknown>[] = []
-
+    #caps = {}
     constructor (options: ReporterOptions) {
         options = Object.assign(options, { stdout: false })
         super(options)
@@ -18,16 +18,18 @@ export default class TestRailReporter extends WDIOReporter {
         this.#api = new TestRailAPI(options)
         this.#options = options
     }
-
     get isSynchronised() {
         return this.#synced
+    }
+    onRunnerStart(runner: RunnerStats) {
+        this.#caps = runner.capabilities
     }
 
     onTestPass(test: TestStats) {
         this.#testCases.push({
             case_id: test.title.split(' ')[0].replace('C', ''),
             status_id: '1',
-            comment: 'This test case is passed',
+            comment: `This test case is passed.\n${JSON.stringify(this.#caps)}`,
             elapsed: test._duration / 1000 + 's'
         })
     }
@@ -36,7 +38,7 @@ export default class TestRailReporter extends WDIOReporter {
         this.#testCases.push({
             case_id: test.title.split(' ')[0].replace('C', ''),
             status_id: '5',
-            comment: `This test case is failed:\n ${JSON.stringify(test.errors)}`,
+            comment: `This test case is failed:\n${JSON.stringify(this.#caps)}\n${JSON.stringify(test.errors)}`,
             elapsed: test._duration / 1000 + 's'
         })
     }
@@ -45,7 +47,7 @@ export default class TestRailReporter extends WDIOReporter {
         this.#testCases.push({
             case_id: test.title.split(' ')[0].replace('C', ''),
             status_id: '4',
-            comment: 'This test case is skipped'
+            comment: `This test case is skipped.\n${JSON.stringify(this.#caps)}`,
         })
     }
 

@@ -3,6 +3,11 @@
 
 This reporter creates TestRail reports. The first thing you need is to enable the TestRail API so that report can communicate with TestRail and push the test results. To do so, log into your TestRail account and go to Administration > Site Settings > API and make sure you click the checkbox near Enable API.
 
+Add TestRail's test case ID to the test description. e.g.
+```javascript
+it("C123456 Page loads correctly", async () => {
+```
+
 ## Install
 
 To use the reporter, add it to your `package.json`:

@@ -19,8 +19,9 @@ export default class TestRailReporter extends WDIOReporter {
         this.#options = options
     }
     get isSynchronised() {
-        return this.#synced
+        return true
     }
+    
     onRunnerStart(runner: RunnerStats) {
         this.#caps = runner.capabilities
     }
@@ -118,7 +119,9 @@ export default class TestRailReporter extends WDIOReporter {
     async #updateTestRun () {
         const runId = await this.#getRunId()
         const caseIds = this.#testCases.map((test) => test.case_id)
-        await this.#api.updateTestRun(runId, caseIds),
-        await this.#api.updateTestRunResults(runId, this.#testCases)
+        if (caseIds.length > 0) {
+            await this.#api.updateTestRun(runId, caseIds)
+            await this.#api.updateTestRunResults(runId, this.#testCases)
+        }
     }
 }

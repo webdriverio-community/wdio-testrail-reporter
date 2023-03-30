@@ -67,10 +67,10 @@ export default class TestRailAPI {
         }
     }
 
-    async pushResults (testId: string, results: TestResults) {
+    async pushResults (runId: string, testId: string, results: TestResults) {
         try {
             const resp = axios.post(
-                `${this.#baseUrl}/add_result_for_case/${this.#projectId}/${testId}`,
+                `${this.#baseUrl}/add_result_for_case/${runId}/${testId}`,
                 results,
                 this.#config,
             )

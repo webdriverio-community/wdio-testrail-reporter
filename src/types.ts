@@ -49,4 +49,8 @@ export interface ReporterOptions {
      * include all test cases in suite
      */
     includeAll: boolean
+    /**
+     * use Cucumber
+     */
+    useCucumber: boolean
 }

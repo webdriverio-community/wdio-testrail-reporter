@@ -61,7 +61,7 @@
     "release-it": "^15.7.0",
     "rimraf": "^5.0.0",
     "typescript": "^5.0.2",
-    "vitest": "^0.30.0"
+    "vitest": "^0.31.0"
   },
   "publishConfig": {
     "access": "public"

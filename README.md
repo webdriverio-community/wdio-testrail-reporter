@@ -34,6 +34,7 @@ export const config = {
                 runName: 'name for the test run',
                 oneReport: true,
                 includeAll: false
+                caseIdTagPrefix: '' // used only for multi-platform Cucumber Scenarios
             }
         ]
     ],
@@ -90,6 +91,12 @@ Type: `boolean`
 Include all tests in suite in test run.
 
 Type: `boolean`
+
+### `caseIdTagPrfix`
+
+Prefix use to locate for case ID in Cucumber tags, useful for multi-platform Cucumber Scenario executions
+
+Type: `string`
 
 ---
 

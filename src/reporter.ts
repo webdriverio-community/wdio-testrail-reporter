@@ -1,4 +1,4 @@
-import WDIOReporter, { TestStats, SuiteStats, RunnerStats } from '@wdio/reporter'
+import WDIOReporter, { TestStats, SuiteStats, RunnerStats, Tag } from '@wdio/reporter'
 
 import TestRailAPI from './api.js'
 import type { ReporterOptions, TestCase, TestResults } from './types'
@@ -132,11 +132,20 @@ export default class TestRailReporter extends WDIOReporter {
             comment: JSON.stringify(values, null, 1)
         }
 
-        if (this.#options.useCucumber) {
-            if (suiteStats.type === 'scenario') {
-                const testId = suiteStats.title.split(' ')[0].replace('C', '')
-                return this.#api.pushResults(this.runId, testId, results)
+        if (this.#options.useCucumber && suiteStats.type === 'scenario') {
+            let testId = '-1'
+            if (this.#options.caseIdTagPrefix && suiteStats.tags) {
+                for (let i = 0; i < suiteStats.tags.length; i++) {
+                    const tag: string | Tag = suiteStats.tags[i]
+                    if (JSON.parse(JSON.stringify(tag)).name.includes(this.#options.caseIdTagPrefix)) {
+                        testId = JSON.parse(JSON.stringify(tag)).name.replace(`@${this.#options.caseIdTagPrefix}`, '').replace('C', '')
+                    }
+                }
+                
+            } else {
+                testId = suiteStats.title.split(' ')[0].replace('C', '')
             }
+            return this.#api.pushResults(this.runId, testId, results)
         } else {
             const testId = suiteStats.fullTitle.split(' ')[0].replace('C', '')
             return this.#api.pushResults(this.runId, testId, results)

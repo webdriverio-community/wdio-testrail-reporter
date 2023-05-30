@@ -53,4 +53,8 @@ export interface ReporterOptions {
      * use Cucumber
      */
     useCucumber: boolean
+    /**
+     * tag prefix when case ID is encoded into Cucumber tags
+     */
+    caseIdTagPrefix: string
 }

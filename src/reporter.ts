@@ -137,11 +137,11 @@ export default class TestRailReporter extends WDIOReporter {
             if (this.#options.caseIdTagPrefix && suiteStats.tags) {
                 for (let i = 0; i < suiteStats.tags.length; i++) {
                     const tag: string | Tag = suiteStats.tags[i]
-                    if (JSON.parse(JSON.stringify(tag)).name.includes(this.#options.caseIdTagPrefix)) {
-                        testId = JSON.parse(JSON.stringify(tag)).name.replace(`@${this.#options.caseIdTagPrefix}`, '').replace('C', '')
+                    const tagName: string = JSON.parse(JSON.stringify(tag)).name
+                    if (tagName.includes(this.#options.caseIdTagPrefix)) {
+                        testId = tagName.replace(`@${this.#options.caseIdTagPrefix}`, '').replace('C', '')
                     }
                 }
-                
             } else {
                 testId = suiteStats.title.split(' ')[0].replace('C', '')
             }

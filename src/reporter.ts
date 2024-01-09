@@ -39,30 +39,42 @@ export default class TestRailReporter extends WDIOReporter {
 
     onTestPass(test: TestStats) {
         if (!this.#options.useCucumber) {
-            this.#testCases.push({
-                case_id: test.title.split(' ')[0].replace('C', ''),
-                status_id: '1',
-                comment: `This test case is passed.\n${JSON.stringify(this.#caps)}`,
-                elapsed: test._duration / 1000 + 's'
-            })
+            const caseIds = test.title.match(/C\d+/g) || []; // Extract multiple case IDs
+            const comment = `This test case is passed.\n${JSON.stringify(this.#caps)}`;
+            caseIds.forEach(caseId => {
+                this.#testCases.push({
+                    case_id: caseId.replace('C', ''),
+                    status_id: '1',
+                    comment,
+                    elapsed: test._duration / 1000 + 's'
+                });
+            });
         }
     }
 
-    onTestFail (test: TestStats) {
-        this.#testCases.push({
-            case_id: test.title.split(' ')[0].replace('C', ''),
-            status_id: '5',
-            comment: `This test case is failed:\n${JSON.stringify(this.#caps)}\n${JSON.stringify(test.errors)}`,
-            elapsed: test._duration / 1000 + 's'
-        })
+    onTestFail(test: TestStats) {
+        const caseIds = test.title.match(/C\d+/g) || []; // Extract multiple case IDs
+        const comment = `This test case is failed:\n${JSON.stringify(this.#caps)}\n${JSON.stringify(test.errors)}`;
+        caseIds.forEach(caseId => {
+            this.#testCases.push({
+                case_id: caseId.replace('C', ''),
+                status_id: '5',
+                comment,
+                elapsed: test._duration / 1000 + 's'
+            });
+        });
     }
 
-    onTestSkip (test: TestStats) {
-        this.#testCases.push({
-            case_id: test.title.split(' ')[0].replace('C', ''),
-            status_id: '4',
-            comment: `This test case is skipped.\n${JSON.stringify(this.#caps)}`,
-        })
+    onTestSkip(test: TestStats) {
+        const caseIds = test.title.match(/C\d+/g) || []; // Extract multiple case IDs
+        const comment = `This test case is skipped.\n${JSON.stringify(this.#caps)}`;
+        caseIds.forEach(caseId => {
+            this.#testCases.push({
+                case_id: caseId.replace('C', ''),
+                status_id: '4',
+                comment,
+            });
+        });
     }
 
     onSuiteEnd (suiteStats: SuiteStats) {

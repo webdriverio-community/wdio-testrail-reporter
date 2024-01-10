@@ -1,0 +1,15 @@
+{
+  "type": "test",
+  "start": "2024-01-10T19:23:50.445Z",
+  "end": "2024-01-10T19:23:50.446Z",
+  "_duration": 1,
+  "uid": "test-00-1",
+  "cid": "0-0",
+  "title": "C00000001 Passing Test",
+  "fullTitle": "Describe Name.C00000001 Passing Test",
+  "output": [],
+  "retries": 0,
+  "parent": "Describe Name",
+  "state": "passed",
+  "body": "async function () {\n      expect(true).to.equal(true);\n    }"
+}

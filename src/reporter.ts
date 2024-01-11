@@ -147,7 +147,7 @@ export default class TestRailReporter extends WDIOReporter {
         if (this.#options.useCucumber && suiteStats.type === 'scenario') {
             let testId = '-1'
             if (this.#options.caseIdTagPrefix && suiteStats.tags) {
-                for (let i = 0  i < suiteStats.tags.length  i++) {
+                for (let i = 0; i < suiteStats.tags.length; i++) {
                     const tag: string | Tag = suiteStats.tags[i]
                     const tagName: string = JSON.parse(JSON.stringify(tag)).name
                     if (tagName.includes(this.#options.caseIdTagPrefix)) {

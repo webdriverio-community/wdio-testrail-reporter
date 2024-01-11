@@ -7,6 +7,10 @@ Add TestRail's test case ID to the test description. e.g.
 ```javascript
 it("C123456 Page loads correctly", async () => {
 ```
+This also supports multiple caseIDs. e.g. 
+```javascript
+it("C123456 C678910 Page loads correctly", async () => {
+```
 
 ## Install
 

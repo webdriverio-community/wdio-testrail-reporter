@@ -57,4 +57,12 @@ export interface ReporterOptions {
      * tag prefix when case ID is encoded into Cucumber tags
      */
     caseIdTagPrefix: string
+
+    /**
+     * desired path for a logfile
+     * This was needed to satisfy a logFile requirementfound in:
+     * reporter.ts's super's constructor: 'this.options.logFile':
+     * https://github.com/webdriverio/webdriverio/blob/main/packages/wdio-reporter/src/index.ts#L52
+     */
+    logFile?: string
 }

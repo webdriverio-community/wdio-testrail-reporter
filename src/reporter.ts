@@ -171,4 +171,7 @@ export default class TestRailReporter extends WDIOReporter {
             await this.#api.updateTestRunResults(this.runId, this.#testCases)
         }
     }
+    getTestCasesArray() {
+        return this.#testCases
+    }
 }

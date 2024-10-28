@@ -57,7 +57,7 @@
     "c8": "^10.1.2",
     "eslint": "^8.35.0",
     "eslint-plugin-import": "^2.27.5",
-    "npm-run-all2": "^6.1.2",
+    "npm-run-all2": "^7.0.1",
     "release-it": "^17.1.1",
     "rimraf": "^5.0.0",
     "typescript": "^5.0.2",

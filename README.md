@@ -7,7 +7,7 @@ Add TestRail's test case ID to the test description. e.g.
 ```javascript
 it("C123456 Page loads correctly", async () => {
 ```
-This also supports multiple caseIDs. e.g. 
+This also supports multiple caseIDs. e.g.
 ```javascript
 it("C123456 C678910 Page loads correctly", async () => {
 ```
@@ -101,6 +101,12 @@ Type: `boolean`
 Prefix use to locate for case ID in Cucumber tags, useful for multi-platform Cucumber Scenario executions
 
 Type: `string`
+
+### `useCucumber`
+
+Indicates whether the tests are written using the Cucumber framework. By default, it is set to `false`.
+
+Type: `boolean`
 
 ---
 

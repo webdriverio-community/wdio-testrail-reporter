@@ -96,7 +96,7 @@ Include all tests in suite in test run.
 
 Type: `boolean`
 
-### `caseIdTagPrfix`
+### `caseIdTagPrefix`
 
 Prefix use to locate for case ID in Cucumber tags, useful for multi-platform Cucumber Scenario executions
 

@@ -22,7 +22,9 @@ npm i --save-dev @wdio/testrail-reporter
 
 ## Usage
 
-Add the reporter to your WDIO config file:
+Add the reporter to your WDIO config file.
+
+Example for when you want to create a new test run:
 
 ```javascript
 export const config = {
@@ -45,6 +47,31 @@ export const config = {
     // ...
 }
 ```
+
+Example for when you want to update an existing test run:
+
+```javascript
+export const config = {
+    // ...
+    reporters:
+        [
+            ['testrail', {
+                projectId: 1,
+                suiteId: 1,
+                domain: 'xxxxx.testrail.io',
+                username: process.env.TESTRAIL_USERNAME,
+                apiToken: process.env.TESTRAIL_API_TOKEN,
+                existingRunId: 2345,
+                oneReport: true,
+                includeAll: false
+                caseIdTagPrefix: '' // used only for multi-platform Cucumber Scenarios
+            }
+        ]
+    ],
+    // ...
+}
+```
+
 
 ## Options
 
@@ -81,6 +108,12 @@ Type: `string`
 ### `runName`
 
 Custom name for the test run.
+
+Type: `string`
+
+### `existingRunId`
+
+Id of an existing test run to update.
 
 Type: `string`
 

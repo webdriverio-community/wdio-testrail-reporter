@@ -44,7 +44,7 @@ export interface ReporterOptions {
     /**
      * id for an existing test run to use
      */
-    existingRunId: string
+    existingRunId?: string
     /**
      * create one report per test run
      */

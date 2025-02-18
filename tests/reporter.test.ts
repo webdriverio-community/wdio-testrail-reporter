@@ -12,7 +12,6 @@ const mockOptions: ReporterOptions = {
     username: 'username',
     apiToken: 'token',
     runName: 'RunName',
-    existingRunId: '',
     oneReport: true,
     includeAll: false,
     caseIdTagPrefix: '',

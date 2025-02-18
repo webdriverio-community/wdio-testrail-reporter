@@ -75,6 +75,7 @@ export default class TestRailAPI {
                 this.#config,
             )
             return resp
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             log.error(`Failed to push results: ${err.message}`)
         }
@@ -119,6 +120,7 @@ export default class TestRailAPI {
                 })
 
             return runId
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             log.error(`Failed to get last test run: ${err.message}`)
         }

@@ -12,7 +12,6 @@ const mockOptions: ReporterOptions = {
     username: 'username',
     apiToken: 'token',
     runName: 'RunName',
-    existingRunId: '',
     oneReport: true,
     includeAll: false,
     caseIdTagPrefix: '',
@@ -165,23 +164,5 @@ describe('Multiple CaseID Extraction', () => {
         expect(typeof testRailReporter.getTestCasesArray()[0].case_id).toEqual(
             'string'
         )
-    })
-    test('Should use runId if set', () => {
-        const jsonFileName = './fixtures/FiveMultiPassingTest.json'
-        const jsonFilePath = path.join(__dirname, jsonFileName)
-        const externalJsonData = JSON.parse(
-            fs.readFileSync(jsonFilePath, 'utf-8')
-        )
-
-        const testStats = {
-            ...externalJsonData,
-            start: new Date(),
-        }
-
-        mockOptions.existingRunId = '26'
-        const testRailReporter = new TestRailReporter(mockOptions)
-        testRailReporter.onTestPass(testStats) // Simulate the onTestPass method
-
-        expect(testRailReporter.runId).toEqual('26')
     })
 })

@@ -1,7 +1,7 @@
 {
   "name": "@wdio/testrail-reporter",
-  "version": "0.4.0",
-  "description": "Create or update a run on testrail and publish the test case results.",
+  "version": "0.3.0",
+  "description": "Create a run on testrail and the update the test cases results",
   "author": "Brad DerManouelian",
   "license": "MIT",
   "contributors": [

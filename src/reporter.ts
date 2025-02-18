@@ -1,10 +1,7 @@
 import WDIOReporter, { TestStats, SuiteStats, RunnerStats, Tag } from '@wdio/reporter'
-import logger from '@wdio/logger'
 
 import TestRailAPI from './api.js'
 import type { ReporterOptions, TestCase, TestResults } from './types'
-
-const log = logger('TestrailReporter')
 
 export default class TestRailReporter extends WDIOReporter {
     #api: TestRailAPI
@@ -14,8 +11,8 @@ export default class TestRailReporter extends WDIOReporter {
     #testCases: TestCase[] = []
     #requestPromises: Promise<unknown>[] = []
     #caps = {}
-
-    interval?: ReturnType<typeof setInterval>
+    
+    interval: ReturnType<typeof setInterval>
     runId: string
 
     constructor (options: ReporterOptions) {
@@ -23,25 +20,21 @@ export default class TestRailReporter extends WDIOReporter {
         super(options)
         this.#api = new TestRailAPI(options)
         this.#options = options
-        if (this.#options.existingRunId != '' && this.#options.runName != '') log.warn('Ignoring runName because existingRunId is set...')
-        this.runId = options.existingRunId ? options.existingRunId : ''
-        if (this.runId == '') {
-            Promise.resolve(this.#getRunId()).then((value) => this.runId = value)
-            this.interval = setInterval(this.checkForRun, 1000)
-        }
+        this.runId = ''
+        Promise.resolve(this.#getRunId()).then((value) => this.runId = value)
+        this.interval = setInterval(this.checkForRun, 1000)
     }
-
+    
     get isSynchronised() {
         return this.#synced
     }
-
+    
     checkForRun() {
         if (this.runId !== '') clearInterval(this.interval)
     }
-
+    
     onRunnerStart(runner: RunnerStats) {
         this.#caps = runner.capabilities
-        this.#getRunId()
     }
 
     onTestPass(test: TestStats) {
@@ -54,8 +47,8 @@ export default class TestRailReporter extends WDIOReporter {
                     status_id: '1',
                     comment,
                     elapsed: test._duration / 1000 + 's'
-                })
-            })
+                }) 
+            }) 
         }
     }
 
@@ -68,20 +61,20 @@ export default class TestRailReporter extends WDIOReporter {
                 status_id: '5',
                 comment,
                 elapsed: test._duration / 1000 + 's'
-            })
-        })
+            }) 
+        }) 
     }
 
     onTestSkip(test: TestStats) {
         const caseIds = test.title.match(/C\d+/g) || []  // Extract multiple case IDs
-        const comment = `This test case is skipped.\n${JSON.stringify(this.#caps)}`
+        const comment = `This test case is skipped.\n${JSON.stringify(this.#caps)}` 
         caseIds.forEach(caseId => {
             this.#testCases.push({
                 case_id: caseId.replace('C', ''),
                 status_id: '4',
                 comment,
-            })
-        })
+            }) 
+        }) 
     }
 
     onSuiteEnd (suiteStats: SuiteStats) {

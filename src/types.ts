@@ -42,10 +42,6 @@ export interface ReporterOptions {
      */
     runName: string
     /**
-     * id for an existing test run to use
-     */
-    existingRunId: string
-    /**
      * create one report per test run
      */
     oneReport: boolean

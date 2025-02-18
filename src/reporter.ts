@@ -41,7 +41,6 @@ export default class TestRailReporter extends WDIOReporter {
 
     onRunnerStart(runner: RunnerStats) {
         this.#caps = runner.capabilities
-        this.#getRunId()
     }
 
     onTestPass(test: TestStats) {

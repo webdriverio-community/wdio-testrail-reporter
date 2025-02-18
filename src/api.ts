@@ -108,6 +108,7 @@ export default class TestRailAPI {
                 this.#config
             )
             const thisrun = resp.data.runs.filter(function (run: NewTest) {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 return run.name!.startsWith(runName)
             })
 

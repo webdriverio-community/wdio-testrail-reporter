@@ -24,7 +24,7 @@ export default class TestRailReporter extends WDIOReporter {
         this.#api = new TestRailAPI(options)
         this.#options = options
         if (this.#options.existingRunId != '' && this.#options.runName != '') log.warn('Ignoring runName because existingRunId is set...')
-        this.runId = options.existingRunId ? options.existingRunId : ''
+        this.runId = this.#options.existingRunId ? this.#options.existingRunId : ''
         if (this.runId == '') {
             Promise.resolve(this.#getRunId()).then((value) => this.runId = value)
             this.interval = setInterval(this.checkForRun, 1000)

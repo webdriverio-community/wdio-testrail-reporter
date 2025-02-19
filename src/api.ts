@@ -75,8 +75,7 @@ export default class TestRailAPI {
                 this.#config,
             )
             return resp
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (err: any) {
+        } catch (err) {
             log.error(`Failed to push results: ${err.message}`)
         }
     }
@@ -108,8 +107,7 @@ export default class TestRailAPI {
                 this.#config
             )
             const thisrun = resp.data.runs.filter(function (run: NewTest) {
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                return run.name!.startsWith(runName)
+                return run.name ? run.name.startsWith(runName) : false
             })
 
             const runId = thisrun.length > 0
@@ -121,8 +119,7 @@ export default class TestRailAPI {
                 })
 
             return runId
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (err: any) {
+        } catch (err) {
             log.error(`Failed to get last test run: ${err.message}`)
         }
     }

@@ -1,21 +1,22 @@
 import { SuiteStats, TestStats } from '@wdio/reporter'
+import { ReporterOptions } from '../types.js'
+import TestRailReporter from '../reporter.js'
 
 exports.default = class CJSTestrailReporter {
     #synced = false
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    private instance: Promise<any>
+    private instance: Promise<TestRailReporter>
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    constructor(options: any) {
+    constructor(options: ReporterOptions) {
         this.instance = import('../index.js').then((TestrailReporter) => {
             return new TestrailReporter.default(options)
         })
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async emit (...args: any[]) {
+    async emit (...args: unknown[]) {
         const instance = await this.instance
-        return instance.emit(...args)
+        const eventName = args[0] as string | symbol
+        [, ...args] = args
+        return instance.emit(eventName, ...args)
     }
 
     get isSynchronised() {

@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios'
+import axios, { AxiosError, AxiosRequestConfig } from 'axios'
 import logger from '@wdio/logger'
 
 import type { TestResults, NewTest, ReporterOptions, TestCase } from './types'
@@ -26,6 +26,13 @@ export default class TestRailAPI {
         }
     }
 
+    //https://support.testrail.com/hc/en-us/articles/7077083596436-Introduction-to-the-TestRail-API#01G68HCTTNHFT1WVDXKW4BC4WP
+    private waitForRateLimit(err: AxiosError<unknown, unknown>) {
+        const headers = err.response?.headers
+        const retryAfter = headers?.['retry-after']
+        new Promise((resolve) => setTimeout(resolve, retryAfter * 1000))
+    }
+
     async updateTestRunResults (runId: string, results: TestCase[], retry = false) {
         try {
             const resp = await axios.post(
@@ -38,9 +45,7 @@ export default class TestRailAPI {
             if (axios.isAxiosError(err) && err.response) {
                 const statusCode = err.response.status
                 if (statusCode === 429 && retry === false) {
-                    const headers = err.response.headers
-                    const retryAfter = headers['retry-after']
-                    new Promise((resolve) => setTimeout(resolve, retryAfter * 1000))
+                    this.waitForRateLimit(err)
                     await this.updateTestRunResults(runId, results, true)
                 } else {
                     log.error(`Failed to update test run results: ${err.message}`)
@@ -79,9 +84,7 @@ export default class TestRailAPI {
             if (axios.isAxiosError(err) && err.response) {
                 const statusCode = err.response.status
                 if (statusCode === 429 && retry === false) {
-                    const headers = err.response.headers
-                    const retryAfter = headers['retry-after']
-                    new Promise((resolve) => setTimeout(resolve, retryAfter * 1000))
+                    this.waitForRateLimit(err)
                     await this.updateTestRun(runId, case_ids, true)
                 } else {
                     log.error(`Failed to update test run: ${err.message}`)
@@ -104,9 +107,7 @@ export default class TestRailAPI {
             if (axios.isAxiosError(err) && err.response) {
                 const statusCode = err.response.status
                 if (statusCode === 429 && retry === false) {
-                    const headers = err.response.headers
-                    const retryAfter = headers['retry-after']
-                    new Promise((resolve) => setTimeout(resolve, retryAfter * 1000))
+                    this.waitForRateLimit(err)
                     await this.pushResults(runId, testId, results, true)
                 } else {
                     log.error(`Failed to push results: ${err.message}`)

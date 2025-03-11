@@ -39,7 +39,7 @@ export const config = {
                 apiToken: process.env.TESTRAIL_API_TOKEN,
                 runName: 'name for the test run',
                 oneReport: true,
-                includeAll: false
+                includeAll: false,
                 caseIdTagPrefix: '' // used only for multi-platform Cucumber Scenarios
             }
         ]
@@ -64,7 +64,29 @@ export const config = {
                 existingRunId: 2345,
                 oneReport: true,
                 includeAll: false
-                caseIdTagPrefix: '' // used only for multi-platform Cucumber Scenarios
+            }
+        ]
+    ],
+    // ...
+}
+```
+
+Example for when you need different project and/or suite ids based on the test suite to execute:
+
+```javascript
+export const config = {
+    // ...
+    reporters:
+        [
+            ['testrail', {
+                projectId: process.env.TESTRAIL_PROJECT_NAME == 'PROJECT_A' ? 1 : 2,
+                suiteId: process.env.TESTRAIL_SUITE_NAME == 'SUITE_A' ? 10 : 20,
+                domain: 'xxxxx.testrail.io',
+                username: process.env.TESTRAIL_USERNAME,
+                apiToken: process.env.TESTRAIL_API_TOKEN,
+                runName: 'name for the test run',
+                oneReport: true,
+                includeAll: false
             }
         ]
     ],

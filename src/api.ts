@@ -75,7 +75,7 @@ export default class TestRailAPI {
                 this.#config,
             )
             return resp
-        } catch (err: any) {
+        } catch (err) {
             log.error(`Failed to push results: ${err.message}`)
         }
     }
@@ -107,7 +107,7 @@ export default class TestRailAPI {
                 this.#config
             )
             const thisrun = resp.data.runs.filter(function (run: NewTest) {
-                return run.name!.startsWith(runName)
+                return run.name ? run.name.startsWith(runName) : false
             })
 
             const runId = thisrun.length > 0
@@ -119,7 +119,7 @@ export default class TestRailAPI {
                 })
 
             return runId
-        } catch (err: any) {
+        } catch (err) {
             log.error(`Failed to get last test run: ${err.message}`)
         }
     }

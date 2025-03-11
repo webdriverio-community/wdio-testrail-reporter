@@ -40,7 +40,7 @@ jobs:
   authorize:
     runs-on: ubuntu-latest
     steps:
-      - uses: octokit/request-action@v2.1.9
+      - uses: octokit/request-action@dad4362715b7fb2ddedf9772c8670824af564f0d # workaround for https://github.com/octokit/request-action/issues/315
         with:
           route: GET /orgs/:organisation/teams/:team/memberships/${{ github.actor }}
           team: technical-steering-committee

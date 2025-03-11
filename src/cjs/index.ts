@@ -1,38 +1,44 @@
+import { SuiteStats, TestStats } from '@wdio/reporter'
+import { ReporterOptions } from '../types.js'
+import TestRailReporter from '../reporter.js'
+
 exports.default = class CJSTestrailReporter {
     #synced = false
-    private instance: Promise<any>
+    private instance: Promise<TestRailReporter>
 
-    constructor(options: any) {
+    constructor(options: ReporterOptions) {
         this.instance = import('../index.js').then((TestrailReporter) => {
             return new TestrailReporter.default(options)
         })
     }
 
-    async emit (...args: any[]) {
+    async emit (...args: unknown[]) {
         const instance = await this.instance
-        return instance.emit(...args)
+        const eventName = args[0] as string | symbol
+        [, ...args] = args
+        return instance.emit(eventName, ...args)
     }
 
     get isSynchronised() {
         return this.#synced
     }
 
-    async onTestPass (test: any) {
+    async onTestPass (test: TestStats) {
         const instance = await this.instance
         return instance.onTestPass(test)
     }
 
-    async onTestFail (test: any) {
+    async onTestFail (test: TestStats) {
         const instance = await this.instance
         return instance.onTestFail(test)
     }
 
-    async onTestSkip (test: any) {
+    async onTestSkip (test: TestStats) {
         const instance = await this.instance
         return instance.onTestSkip(test)
     }
 
-    async onSuiteEnd (suiteStats: any) {
+    async onSuiteEnd (suiteStats: SuiteStats) {
         const instance = await this.instance
         return instance.onSuiteEnd(suiteStats)
     }

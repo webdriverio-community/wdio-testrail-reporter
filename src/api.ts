@@ -133,10 +133,10 @@ export default class TestRailAPI {
         return resp.data.id
     }
 
-    async getLastTestRun (suiteId: string, runName: string) {
-        const thirtyMinAgo = new Date()
-        thirtyMinAgo.setMinutes(thirtyMinAgo.getMinutes() - 30)
-        const date = new Date(thirtyMinAgo)
+    async getLastTestRun (suiteId: string, runName: string, timeInMinutes = 30) {
+        const timeAgo = new Date()
+        timeAgo.setMinutes(timeAgo.getMinutes() - timeInMinutes)
+        const date = new Date(timeAgo)
 
         const unixTimeStamp = Math.floor(date.getTime() / 1000)
         try {

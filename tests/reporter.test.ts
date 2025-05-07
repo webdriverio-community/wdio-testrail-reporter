@@ -16,6 +16,7 @@ const mockOptions: ReporterOptions = {
     includeAll: false,
     caseIdTagPrefix: '',
     useCucumber: false,
+    timeInMinutes: 30,
     logFile: '../logFileToSatisfyReporterOptions.log',
 }
 const mockOptionsExistingRun: ReporterOptions = {
@@ -30,6 +31,7 @@ const mockOptionsExistingRun: ReporterOptions = {
     includeAll: true,
     caseIdTagPrefix: '',
     useCucumber: false,
+    timeInMinutes: 30,
     logFile: '../logFileToSatisfyReporterOptions.log',
 }
 

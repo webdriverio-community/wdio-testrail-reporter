@@ -163,6 +163,12 @@ Indicates whether the tests are written using the Cucumber framework. By default
 
 Type: `boolean`
 
+### `timeInMinutes`
+
+Max time in past to consider when using 'oneReport' to check for existing runs.
+
+Type: `number`
+
 ---
 
 For more information on WebdriverIO see the [homepage](https://webdriver.io).

@@ -105,7 +105,7 @@ export default class TestRailReporter extends WDIOReporter {
 
     #getRunId () {
         return this.#options.oneReport
-            ? this.#api.getLastTestRun(this.#options.suiteId, this.#options.runName)
+            ? this.#api.getLastTestRun(this.#options.suiteId, this.#options.runName, this.#options.timeInMinutes)
             : this.#api.createTestRun({
                 suite_id: this.#options.suiteId,
                 name: this.#options.runName,

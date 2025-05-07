@@ -61,6 +61,10 @@ export interface ReporterOptions {
      * tag prefix when case ID is encoded into Cucumber tags
      */
     caseIdTagPrefix: string
+    /**
+     * max time in past to consider when using 'oneReport' to check for existing runs
+     */
+    timeInMinutes: number
 
     /**
      * desired path for a logfile

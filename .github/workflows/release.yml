@@ -37,7 +37,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v1
         with:
-          node-version: 18.x
+          node-version-file: .nvmrc
       - name: NPM Setup
         run: |
           npm set registry "https://registry.npmjs.org/"

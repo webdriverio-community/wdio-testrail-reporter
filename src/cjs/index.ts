@@ -1,6 +1,6 @@
-import { SuiteStats, TestStats } from '@wdio/reporter'
-import { ReporterOptions } from '../types.js'
-import TestRailReporter from '../reporter.js'
+import { type SuiteStats, type TestStats } from '@wdio/reporter'
+import { type ReporterOptions } from '../types.js'
+import type TestRailReporter from '../reporter.js'
 
 exports.default = class CJSTestrailReporter {
     #synced = false

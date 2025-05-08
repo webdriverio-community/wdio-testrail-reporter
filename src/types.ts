@@ -1,3 +1,5 @@
+import type { Reporters } from '@wdio/types'
+
 export interface TestResults {
     status_id: string
     comment: string
@@ -16,7 +18,7 @@ export interface TestCase {
     elapsed?: string
 }
 
-export interface ReporterOptions {
+export interface ReporterOptions extends Reporters.Options {
     /**
      * your-domain.testrail.io
      */

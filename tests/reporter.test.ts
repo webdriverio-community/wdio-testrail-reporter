@@ -1,9 +1,9 @@
+import fs from 'node:fs'
+import path from 'node:path'
+
 import { describe, test, expect } from 'vitest'
 import TestRailReporter from '../src/reporter.ts'
-import { ReporterOptions } from '../src/types.ts'
-
-import fs from 'fs'
-import path from 'path'
+import type { ReporterOptions } from '../src/types.ts'
 
 const mockOptions: ReporterOptions = {
     projectId: '1',
@@ -35,7 +35,10 @@ const mockOptionsExistingRun: ReporterOptions = {
     logFile: '../logFileToSatisfyReporterOptions.log',
 }
 
-describe.each([{options: mockOptions}, {options: mockOptionsExistingRun}])('Single CaseID Extraction', ({ options }) => {
+describe.each([
+    { options: mockOptions },
+    { options: mockOptionsExistingRun }
+])('Single CaseID Extraction', ({ options }) => {
     test(`Should extract a single CaseID for onTestPass() with options '${options.runName}'`, () => {
         const jsonFileName = './fixtures/SinglePassingTest.json'
         const jsonFilePath = path.join(__dirname, jsonFileName)
@@ -98,7 +101,10 @@ describe.each([{options: mockOptions}, {options: mockOptionsExistingRun}])('Sing
         )
     })
 })
-describe.each([{options: mockOptions}, {options: mockOptionsExistingRun}])('Multiple CaseID Extraction', ({ options }) => {
+describe.each([
+    { options: mockOptions },
+    { options: mockOptionsExistingRun }
+])('Multiple CaseID Extraction', ({ options }) => {
     test(`Should extract multiple CaseIDs for onTestPass() with options '${options.runName}'`, () => {
         const jsonFileName = './fixtures/MultiPassingTest.json'
         const jsonFilePath = path.join(__dirname, jsonFileName)

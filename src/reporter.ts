@@ -1,4 +1,4 @@
-import WDIOReporter, { TestStats, SuiteStats, RunnerStats, Tag } from '@wdio/reporter'
+import WDIOReporter, { type TestStats, type SuiteStats, type RunnerStats, type Tag } from '@wdio/reporter'
 import logger from '@wdio/logger'
 
 import TestRailAPI from './api.js'
@@ -23,9 +23,11 @@ export default class TestRailReporter extends WDIOReporter {
         super(options)
         this.#api = new TestRailAPI(options)
         this.#options = options
-        if (this.#options.existingRunId != '' && this.#options.runName != '') log.warn('Ignoring runName because existingRunId is set...')
+        if (this.#options.existingRunId !== '' && this.#options.runName !== '') {
+            log.warn('Ignoring runName because existingRunId is set...')
+        }
         this.runId = this.#options.existingRunId ? this.#options.existingRunId : ''
-        if (this.runId == '') {
+        if (this.runId === '') {
             Promise.resolve(this.#getRunId()).then((value) => this.runId = value)
             this.interval = setInterval(this.checkForRun, 1000)
         }
@@ -36,7 +38,9 @@ export default class TestRailReporter extends WDIOReporter {
     }
 
     checkForRun() {
-        if (this.runId !== '') clearInterval(this.interval)
+        if (this.runId !== '') {
+            clearInterval(this.interval)
+        }
     }
 
     onRunnerStart(runner: RunnerStats) {
@@ -164,10 +168,9 @@ export default class TestRailReporter extends WDIOReporter {
                 testId = suiteStats.title.split(' ')[0].replace('C', '')
             }
             return this.#api.pushResults(this.runId, testId, results)
-        } else {
-            const testId = suiteStats.fullTitle.split(' ')[0].replace('C', '')
-            return this.#api.pushResults(this.runId, testId, results)
         }
+        const testId = suiteStats.fullTitle.split(' ')[0].replace('C', '')
+        return this.#api.pushResults(this.runId, testId, results)
     }
 
     async #updateTestRun () {

@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig } from 'axios'
+import axios, { type AxiosError, type AxiosRequestConfig } from 'axios'
 import logger from '@wdio/logger'
 
 import type { TestResults, NewTest, ReporterOptions, TestCase } from './types'
@@ -57,7 +57,7 @@ export default class TestRailAPI {
         }
     }
 
-    async updateTestRun (runId: string, case_ids: unknown[], retry = false) {
+    async updateTestRun (runId: string, caseIds: unknown[], retry = false) {
         await axios.get(
             `${this.#baseUrl}/get_tests/${runId}`,
             this.#config
@@ -65,7 +65,7 @@ export default class TestRailAPI {
             if (res.data.tests.length > 0) {
                 const addCaseIds = res.data.tests.map((tests: { case_id: number }) => tests.case_id)
                 addCaseIds.forEach((id: number) => {
-                    case_ids.push(id)
+                    caseIds.push(id)
                 })
             }
         }
@@ -76,7 +76,7 @@ export default class TestRailAPI {
         try {
             const resp = await axios.post(
                 `${this.#baseUrl}/update_run/${runId}`,
-                { 'case_ids': case_ids },
+                { 'case_ids': caseIds },
                 this.#config
             )
             return resp
@@ -85,7 +85,7 @@ export default class TestRailAPI {
                 const statusCode = err.response.status
                 if (statusCode === 429 && retry === false) {
                     this.waitForRateLimit(err)
-                    await this.updateTestRun(runId, case_ids, true)
+                    await this.updateTestRun(runId, caseIds, true)
                 } else {
                     log.error(`Failed to update test run: ${err.message}`)
                 }

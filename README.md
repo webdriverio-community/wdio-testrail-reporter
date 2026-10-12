@@ -1,6 +1,11 @@
 
 # WebdriverIO Testrail Reporter
 
+> [!IMPORTANT]
+> **This repository does not support WebdriverIO v10.** It stays in maintenance mode for WebdriverIO v9 only.
+>
+> It gets no new features. Only critical fixes for WebdriverIO v9 are possible.
+
 This reporter creates TestRail reports. The first thing you need is to enable the TestRail API so that report can communicate with TestRail and push the test results. To do so, log into your TestRail account and go to Administration > Site Settings > API and make sure you click the checkbox near Enable API.
 
 Add TestRail's test case ID to the test description. e.g.

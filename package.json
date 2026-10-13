@@ -48,7 +48,7 @@
   ],
   "dependencies": {
     "@wdio/logger": "^9.4.4",
-    "@wdio/reporter": "^9.12.6",
+    "@wdio/reporter": "^10.0.1",
     "axios": "^1.9.0"
   },
   "devDependencies": {
